@@ -24,8 +24,8 @@ with open("hard_pairs_l","rb") as f:
 df = pd.DataFrame()
 for j, pair in enumerate(pairs):
     author1, author2 = pair
-    author_1 = pd.read_csv(f'../Data/{author1}.csv').filter(['author', 'title', 'text'])
-    author_2 = pd.read_csv(f'../Data/{author2}.csv').filter(['author', 'title', 'text'])
+    author_1 = pd.read_csv(f'Data/{author1}.csv').filter(['author', 'title', 'text'])
+    author_2 = pd.read_csv(f'Data/{author2}.csv').filter(['author', 'title', 'text'])
 
     data_ = pd.concat([clean_text(author_1), clean_text(author_2)], ignore_index=True)
     kf = KFold(n_splits=5)
@@ -33,6 +33,7 @@ for j, pair in enumerate(pairs):
     acc2 = []
     acc3 = []
     acc4 = []
+    acc5 = []
     for i, (train_index, test_index) in enumerate(kf.split(data_)):
         X_train = data_.iloc[train_index]
         X_test = data_.iloc[test_index]
@@ -40,17 +41,18 @@ for j, pair in enumerate(pairs):
         y_pred2, y_true2 = chi2(X_train,X_test)
         y_pred3, y_true3 = svm(X_train,X_test)
         y_pred4, y_true4 = bert(X_train,X_test)
+        y_pred5, y_true5 = get_pvals(X_train,X_test,eff_corr=False)
         acc1.append(accuracy(y_true1,y_pred1))
         acc2.append(accuracy(y_true2,y_pred2))
         acc3.append(accuracy(y_true3,y_pred3))
         acc4.append(accuracy(y_true4,y_pred4))
+        acc5.append(accuracy(y_true5,y_pred5))
     df1 = pd.DataFrame({"Author1":author1, "Author2":author2,"PHC acc": f"{round(np.mean(acc1),2)} ({round(np.std(acc1),2)})",\
     "Chi-square acc": f"{round(np.mean(acc2),2)} ({round(np.std(acc1),2)})", "SVM acc": f"{round(np.mean(acc3),2)} ({round(np.std(acc3),2)})",\
-    "SVM-Bert acc":f"{round(np.mean(acc4),2)} ({round(np.std(acc4),2)})"},index=[j])
+    "SVM-Bert acc":f"{round(np.mean(acc4),2)} ({round(np.std(acc4),2)})", "PHC wo eff_corr": f"{round(np.mean(acc5),2)} ({round(np.std(acc5),2)})"},index=[j])
     df = pd.concat((df,df1))
 
     
-    
 """Save results to csv"""
 #df.to_csv("Results_experiments_easy.csv")
-#df.to_csv("Results_experiments_hard.csv")
+df.to_csv("Results_experiments_hard.csv")

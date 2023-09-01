@@ -37,19 +37,19 @@ model = SentenceTransformer('all-MiniLM-L6-v2')
 
 
 
-with open('../MADStat-dataset-final-version/data.json') as json_file:
+with open('MADStat-dataset-final-version/data.json') as json_file:
     data = json.load(json_file)
     
 '''load list of authors'''
-with open('../author_name.txt') as f:
+with open('author_name.txt') as f:
     authors = f.readlines()
 authors = [author.strip() for author in authors]
 
 '''load papers info'''
-papers = pd.read_csv("../paper.csv")
+papers = pd.read_csv("paper.csv")
 
 """load list of authors having at least 30 papers"""
-with open("../../authors","rb") as fp:
+with open("authors","rb") as fp:
     author_l = pickle.load(fp)
 
 

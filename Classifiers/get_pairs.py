@@ -18,6 +18,8 @@ import random
 import heapq
 from get_abstract import count_shared_papers
 
+
+N = 5 # number of pairs of authors to generate for experiments
 with open('../MADStat-dataset-final-version/data.json') as json_file:
     data = json.load(json_file)
     
@@ -77,7 +79,7 @@ def get_easy_pairs(author1):
 
 t1 = time.time()
 hard_pairs = []
-while len(hard_pairs) < 15:
+while len(hard_pairs) < N:
     author1 = random.choice(author_l)
     author2, count = get_hardest_author(author1)
     if author2 != 0:

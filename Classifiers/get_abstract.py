@@ -4,17 +4,17 @@ import json
 import pickle
 
 '''load ids of paper for each author'''
-with open('../MADStat-dataset-final-version/data.json') as json_file:
+with open('MADStat-dataset-final-version/data.json') as json_file:
     data = json.load(json_file)
 
 
 '''load list of authors'''
-with open('../author_name.txt') as f:
+with open('author_name.txt') as f:
     authors = f.readlines()
 authors = [author.strip() for author in authors]
 
 '''load papers info'''
-papers = pd.read_csv("../paper.csv")
+papers = pd.read_csv("paper.csv")
 
 def get_abstract(author_name, min_paper=30):
     author_id = authors.index(author_name)

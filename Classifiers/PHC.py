@@ -87,7 +87,7 @@ def estimate_poisson(corpus):
     return np.mean(corpus,axis=0)
 
 """Return pvals using standard normal cdf"""
-def get_pvals(data_train,data_test,show_hist=False):
+def get_pvals(data_train,data_test,eff_corr=False,show_hist=False):
     author1, author2 = set(data_train["author"])
     
     def replace_labels(x):
@@ -113,7 +113,10 @@ def get_pvals(data_train,data_test,show_hist=False):
     sx = np.std(corpus1,axis=0)
     sy = np.std(corpus2,axis=0)
     z = (lam_1 - lam_2)/np.sqrt((sx**2/corpus1.shape[0]) + (sy**2/corpus2.shape[0]))
-    z_n = (z - np.mean(z))/np.std(z)
+    if eff_corr:
+        z_n = (z - np.mean(z))/np.std(z)
+    else:
+        z_n = z
     if show_hist:
         plt.hist(z_n)
         plt.title(f"Normalized z-counts for {author1} and {author2}")
@@ -147,8 +150,8 @@ with open("easy_pairs_l","rb") as f:
 
 for j, pair in enumerate(pairs):
     author1, author2 = pair
-    author_1 = pd.read_csv(f'../Data/{author1}.csv').filter(['author', 'title', 'text'])
-    author_2 = pd.read_csv(f'../Data/{author2}.csv').filter(['author', 'title', 'text'])
+    author_1 = pd.read_csv(f'Data/{author1}.csv').filter(['author', 'title', 'text'])
+    author_2 = pd.read_csv(f'Data/{author2}.csv').filter(['author', 'title', 'text'])
 
     data_ = pd.concat([clean_text(author_1), clean_text(author_2)], ignore_index=True)
     kf = KFold(n_splits=5)
