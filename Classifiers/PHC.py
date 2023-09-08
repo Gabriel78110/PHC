@@ -7,12 +7,11 @@ import matplotlib.pyplot as plt
 from collections import Counter
 from scipy.stats import norm
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import f1_score
+from sklearn.model_selection import KFold
 import re
 import random
 import heapq
 from get_abstract import count_shared_papers
-from sklearn.model_selection import KFold
 
 # with open('../MADStat-dataset-final-version/data.json') as json_file:
 #     data = json.load(json_file)

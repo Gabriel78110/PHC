@@ -6,7 +6,6 @@ from PHC import clean_text
 from PHC import accuracy
 from svm_w2vec import svm
 from bert import bert
-from sklearn.metrics import f1_score
 from sklearn.model_selection import KFold
 import pandas as pd
 

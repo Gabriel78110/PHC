@@ -17,16 +17,13 @@ import matplotlib.pyplot as plt
 from collections import Counter
 from scipy.stats import norm
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import f1_score
-from nltk.tokenize import TweetTokenizer
+from sklearn.decomposition import PCA
+from sklearn.svm import SVC
 import re
 import sys
 import random
 import heapq 
 from get_abstract import count_shared_papers
-
-from sklearn.decomposition import PCA
-from sklearn.svm import SVC
 
 
 # N = 32
