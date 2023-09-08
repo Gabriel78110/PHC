@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # Add a margin between the main title and sub-plots
     fig.subplots_adjust(wspace=0.2, top=0.85)
     #fig.suptitle("Main Title", fontsize=15)
-    fig.text(0.5, 0.04, '% increase of l1 on the subset of discriminative words', ha='center', va='center',fontsize=12)
+    fig.text(0.5, 0.04, '% increase of l1 on the subset of discriminative words', ha='center', va='center',fontsize=20)
     #fig.text(0.06, 0.5, 'common ylabel', ha='center', va='center', rotation='vertical')
 
     # Add the subplots
@@ -62,6 +62,7 @@ if __name__ == '__main__':
     fig.legend(handles, labels, loc="center right", fontsize = 12)
 
     #plt.figure(figsize=(1,2.5))
+    fig.tight_layout(rect=[0, 0.03, 1, 0.95])
     plt.show()
 
 
