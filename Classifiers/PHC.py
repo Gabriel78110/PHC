@@ -8,7 +8,6 @@ from collections import Counter
 from scipy.stats import norm
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import f1_score
-from nltk.tokenize import TweetTokenizer
 import re
 import random
 import heapq
@@ -31,7 +30,7 @@ from sklearn.model_selection import KFold
 #     author_l = pickle.load(fp)
 
 
-def HC(pvals, gamma=0.25, thresh=0.5):
+def HC(pvals, gamma=0.25, thresh=0.99):
     pvals = np.sort(pvals[pvals <= thresh])
     N = len(pvals)
     hc = -1000
@@ -148,14 +147,14 @@ def accuracy(y_preds,y_true):
 with open("easy_pairs_l","rb") as f:
     pairs = pickle.load(f)
 
-for j, pair in enumerate(pairs):
-    author1, author2 = pair
-    author_1 = pd.read_csv(f'Data/{author1}.csv').filter(['author', 'title', 'text'])
-    author_2 = pd.read_csv(f'Data/{author2}.csv').filter(['author', 'title', 'text'])
+# for j, pair in enumerate(pairs):
+#     author1, author2 = pair
+#     author_1 = pd.read_csv(f'Data/{author1}.csv').filter(['author', 'title', 'text'])
+#     author_2 = pd.read_csv(f'Data/{author2}.csv').filter(['author', 'title', 'text'])
 
-    data_ = pd.concat([clean_text(author_1), clean_text(author_2)], ignore_index=True)
-    kf = KFold(n_splits=5)
-    for i, (train_index, test_index) in enumerate(kf.split(data_)):
-        X_train = data_.iloc[train_index]
-        X_test = data_.iloc[test_index]
-        get_pvals(X_train,X_test)
+#     data_ = pd.concat([clean_text(author_1), clean_text(author_2)], ignore_index=True)
+#     kf = KFold(n_splits=5)
+#     for i, (train_index, test_index) in enumerate(kf.split(data_)):
+#         X_train = data_.iloc[train_index]
+#         X_test = data_.iloc[test_index]
+#         get_pvals(X_train,X_test)

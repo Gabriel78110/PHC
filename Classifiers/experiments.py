@@ -16,7 +16,7 @@ import pandas as pd
 #     pairs = pickle.load(f)
 
 #uncomment for hard pairs
-with open("hard_pairs_l","rb") as f:
+with open("easy_pairs_l","rb") as f:
     pairs = pickle.load(f)
 
 
@@ -26,6 +26,7 @@ for j, pair in enumerate(pairs):
     author1, author2 = pair
     author_1 = pd.read_csv(f'Data/{author1}.csv').filter(['author', 'title', 'text'])
     author_2 = pd.read_csv(f'Data/{author2}.csv').filter(['author', 'title', 'text'])
+    n,m = author_1.shape[0], author_2.shape[0]
 
     data_ = pd.concat([clean_text(author_1), clean_text(author_2)], ignore_index=True)
     kf = KFold(n_splits=5)
@@ -47,12 +48,12 @@ for j, pair in enumerate(pairs):
         acc3.append(accuracy(y_true3,y_pred3))
         acc4.append(accuracy(y_true4,y_pred4))
         acc5.append(accuracy(y_true5,y_pred5))
-    df1 = pd.DataFrame({"Author1":author1, "Author2":author2,"PHC acc": f"{round(np.mean(acc1),2)} ({round(np.std(acc1),2)})",\
+    df1 = pd.DataFrame({"Author1":author1,"N1":n, "Author2":author2,"N2":m,"PHC acc": f"{round(np.mean(acc1),2)} ({round(np.std(acc1),2)})",\
     "Chi-square acc": f"{round(np.mean(acc2),2)} ({round(np.std(acc1),2)})", "SVM acc": f"{round(np.mean(acc3),2)} ({round(np.std(acc3),2)})",\
     "SVM-Bert acc":f"{round(np.mean(acc4),2)} ({round(np.std(acc4),2)})", "PHC wo eff_corr": f"{round(np.mean(acc5),2)} ({round(np.std(acc5),2)})"},index=[j])
     df = pd.concat((df,df1))
 
     
 """Save results to csv"""
-#df.to_csv("Results_experiments_easy.csv")
-df.to_csv("Results_experiments_hard.csv")
+df.to_csv("Results_experiments_easy.csv")
+#df.to_csv("Results_experiments_hard.csv")
