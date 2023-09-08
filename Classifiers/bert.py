@@ -17,8 +17,6 @@ import matplotlib.pyplot as plt
 from collections import Counter
 from scipy.stats import norm
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import f1_score
-from nltk.tokenize import TweetTokenizer
 import re
 import sys
 import random
