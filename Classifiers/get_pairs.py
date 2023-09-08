@@ -8,10 +8,6 @@ import time
 import heapq
 import matplotlib.pyplot as plt
 from collections import Counter
-from scipy.stats import norm
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import f1_score
-from nltk.tokenize import TweetTokenizer
 import re
 import pickle
 import random
@@ -86,7 +82,7 @@ while len(hard_pairs) < N:
         hard_pairs.append((author1,author2))
 
 
-"""for easy pairs uncomment the following"""
+"""for easy pairs uncomment the following and comment the above"""
 
 # easy_pairs = []
 # while len(easy_pairs) < 30:
